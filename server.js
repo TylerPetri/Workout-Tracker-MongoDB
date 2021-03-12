@@ -18,6 +18,23 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/workout', {
 // app.use(require('./routes/api.js'))
 // app.use(require('./routes/view.js'))
 
+//html routes
+const path = require('path')
+
+app.get('/exercise', ( req, res) => {
+  res.sendFile(path.join(__dirname, "./public/exercise.html"))
+})
+
+app.get('/exercise/:id', ( req, res ) => {
+  const id = req.params.id
+  res.sendFile(path.join(__dirname, './public/exercise.html'))
+})
+
+app.get('/stats', ( req, res ) => {
+  res.sendFile(path.join(__dirname, './public/stats.html'))
+})
+
+//api routes
 const db = require('./models')
 
 app.get("/api/workouts", (req, res) => {
@@ -30,27 +47,33 @@ app.get("/api/workouts", (req, res) => {
       });
   });
 
-app.put('/api/workouts/:id', ({ params },res ) => {
-    db.Workout.updateOne(
-        {
-            _id: ObjectId(params.id)
-        }, 
-        {
-            $set: {
-                data: ''
-            }
-        },
-        (error, edited) => {
-            if (error) {
-              console.log(error);
-              res.send(error);
-            } else {
-              console.log(edited);
-              res.send(edited);
-            }
-          }
-        )
+app.post('/api/workouts', ( req, res ) => {
+  console.log(req.body)
+  // db.Workout.create({})
+  res.send()
 })
+
+// app.put('/api/workouts/:id', ({ params },res ) => {
+//     db.Workout.updateOne(
+//         {
+//             _id: ObjectId(params.id)
+//         }, 
+//         {
+//             $set: {
+//                 data: ''
+//             }
+//         },
+//         (error, edited) => {
+//             if (error) {
+//               console.log(error);
+//               res.send(error);
+//             } else {
+//               console.log(edited);
+//               res.send(edited);
+//             }
+//           }
+//         )
+// })
 
 
 app.listen( PORT, () => {
