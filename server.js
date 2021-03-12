@@ -25,11 +25,6 @@ app.get('/exercise', ( req, res) => {
   res.sendFile(path.join(__dirname, "./public/exercise.html"))
 })
 
-app.get('/exercise/:id', ( req, res ) => {
-  const id = req.params.id
-  res.sendFile(path.join(__dirname, './public/exercise.html'))
-})
-
 app.get('/stats', ( req, res ) => {
   res.sendFile(path.join(__dirname, './public/stats.html'))
 })
@@ -47,33 +42,38 @@ app.get("/api/workouts", (req, res) => {
       });
   });
 
+
 app.post('/api/workouts', ( req, res ) => {
   console.log(req.body)
-  // db.Workout.create({})
+  const data = req.body
+  db.Workout.create(data)
   res.send()
 })
 
-// app.put('/api/workouts/:id', ({ params },res ) => {
-//     db.Workout.updateOne(
-//         {
-//             _id: ObjectId(params.id)
-//         }, 
-//         {
-//             $set: {
-//                 data: ''
-//             }
-//         },
-//         (error, edited) => {
-//             if (error) {
-//               console.log(error);
-//               res.send(error);
-//             } else {
-//               console.log(edited);
-//               res.send(edited);
-//             }
-//           }
-//         )
-// })
+app.put('/api/workouts/:id', ( req , res ) => {
+
+  const data = req.body
+ 
+    db.Workout.updateOne(
+        {
+            _id: mongoose.Types.ObjectId(req.params.id)
+        }, 
+        {
+            $push: {
+                exercises: data
+            }
+        },
+        (error, edited) => {
+            if (error) {
+              console.log(error);
+              res.send(error);
+            } else {
+              console.log(edited);
+              res.send(edited);
+            }
+          }
+        )
+})
 
 
 app.listen( PORT, () => {
