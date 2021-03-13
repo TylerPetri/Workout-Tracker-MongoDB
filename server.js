@@ -33,9 +33,9 @@ app.get("/api/workouts", (req, res) => {
   Workout.aggregate([
     {
       $addFields: {
-        totalDuration: { $sum: "$exercises.duration" },
-      },
-    },
+        totalDuration: { $sum: "$exercises.duration" }
+      }
+    }
   ])
     .then((dbUser) => {
       res.json(dbUser);
@@ -44,6 +44,25 @@ app.get("/api/workouts", (req, res) => {
       res.json(err);
     });
 });
+
+app.get('/api/workouts/range', ( req, res ) => {
+  Workout.aggregate([
+    {
+      $addFields: {
+        totalDuration: { $sum: "$exercises.duration" }
+      }
+    }
+  ])
+  .sort({day: -1})
+  .limit(7)
+  .sort({day: 1})
+  .then((dbUser) => {
+    res.json(dbUser);
+  })
+  .catch((err) => {
+    res.json(err);
+  });
+})
 
 app.post("/api/workouts", (req, res) => {
   const data = req.body;
