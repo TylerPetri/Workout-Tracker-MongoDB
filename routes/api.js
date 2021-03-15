@@ -38,17 +38,15 @@ router.get('/api/workouts/range', ( req, res ) => {
 })
 
 router.post("/api/workouts", (req, res) => {
-  const data = req.body;
-  const doc = new Workout(data);
-  doc
-    .save()
-    .then((workoutDB) => {
-      res.json(workoutDB);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
+    Workout
+      .create({})
+      .then((workoutDB) => {
+        res.json(workoutDB);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  });
 
 router.put("/api/workouts/:id", (req, res) => {
   const data = req.body;
