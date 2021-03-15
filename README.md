@@ -6,7 +6,7 @@
 
 You want to track your workouts? Maybe fool your loved ones? You can track weights, the name of the exercise, the type, the duration, the reps, the sets, and the distance! All neatly displayed in the dashboard page the the form of various graphs!
 
-Deployed app: workout-tracker-mongodb5000.herokuapp.com
+Deployed app: https://workout-tracker-mongodb5000.herokuapp.com/
 
 ![Dashboard](public/assets/images/Dashboard.PNG)
 ![LastWorkout](public/assets/images/LastWorkout.PNG)
